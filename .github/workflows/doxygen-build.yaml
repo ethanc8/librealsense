@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - arch
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Doxygen docs
+        id: ghaction
+        uses: AgarwalSaurav/ghaction-doxygen-ghpages@v2.0.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: doc/doxygen
+          doxyfile-path: doc/doxygen/doxyfile
+          html-output-folder: doxygen
+          branch: gh-pages
